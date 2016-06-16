@@ -18,7 +18,7 @@ http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 ### Atlas account
 
 1. Create an accout on https://atlas.hashicorp.com/ 
-2. Get API token and paste it into template-secret-vars.json as atlas_token value
+2. Get API token and paste it into `template-secret-vars.json` as `atlas_token value`
 
 
 
@@ -26,7 +26,7 @@ http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 ### AWS account
 
 1. Create an accout on https://aws.amazon.com/ 
-2. Get API keys andpaste those into template-secret-vars.json as access_key and secret_key
+2. Get API keys andpaste those into `template-secret-vars.json` as `access_key` and `secret_key`
 3. Create S3 bucket directory
 4. Create VM Import Service Role  and policy for the service role , check also if your account have appropriate permitions , all information is on http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/VMImportPrerequisites.html#vmimport-service-role
 
@@ -64,16 +64,22 @@ here need pass credentials to your AWS ans Atlas accounts
 
 
 `{
+
   "atlas_token": "atlas tocken here",
+  
   "atlas_name": "atlas account name here",
+  
   "access_key": "AWS key here",
+  
   "secret_key": "AWS secret_key here"
+
 }` 
 
+### Sys Install files
 
-### instalation plans are in `kickstarts` directory 
+Instalation plans are in `kickstarts` directory 
 
-### post install scripts are in `scripts` directory 
+Post install scripts are in `scripts` directory 
 
 
 ## Build vagrant box and upload to atlas 

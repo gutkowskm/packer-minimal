@@ -1,0 +1,7 @@
+old/
+packer
+packer_cache/
+secret-vars.json
+.vagrant/
+*.iso
+*.box

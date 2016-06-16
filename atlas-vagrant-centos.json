@@ -1,0 +1,96 @@
+{
+  "variables":
+    {
+      "iso_url": "",
+      "iso_checksum": "",
+      "iso_checksum_type": "",
+      "redhat_release": "",
+      "vm_name": "",
+      "guest_os_type": "",
+      "guest_additions_path": "",
+      "kickstart_file_name": "",
+      "distr": "",
+      "user_tag": "",
+      "architecture": "",
+      "disk_size": "",
+      "atlas_token": "",
+      "atlas_name": "",
+      "artifact_name": "",
+      "artifact_type": "",
+      "secret_key": "",
+      "access_key": "",
+      "region": "",
+      "s3_bucket_name": ""
+    },
+
+  "builders": [
+    {   
+      "type": "virtualbox-iso",
+      "vm_name": "{{user `vm_name`}}",
+      "boot_wait": "10s",
+      "disk_size": "{{user `disk_size`}}",
+      "guest_os_type": "{{user `guest_os_type`}}",
+      "http_directory": "kickstarts",
+
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "format": "ova",
+      "guest_additions_path": "{{user `guest_additions_path`}}",
+
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `kickstart_file_name`}}<enter><wait>"
+      ],
+      "shutdown_command": "echo 'centos'|sudo -S /sbin/halt -h -p",
+      "shutdown_timeout" : "10s",
+      "ssh_username": "centos",
+      "ssh_password": "C3nt05",
+      "ssh_port": 22,       
+      "hard_drive_interface": "sata",
+      "ssh_wait_timeout": "60m",
+      "output_directory": "builds",      
+      "vboxmanage": [
+        [  "modifyvm",  "{{.Name}}",  "--memory",  "1024" ],
+        [  "modifyvm",  "{{.Name}}",  "--cpus",  "1" ]
+      ],
+      "virtualbox_version_file": ".vbox_version"
+    }
+
+   ], 
+  
+  "post-processors": [
+    [{
+      "output": "{{user `distr`}}.{{user `redhat_release`}}-{{user `architecture`}}-{{user `user_tag`}}.box",
+      "compression_level": "6",
+      "type": "vagrant"
+    },
+    {
+      "type": "atlas",
+      "token": "{{user `atlas_token`}}",
+      "artifact": "{{user `atlas_name`}}/{{user `artifact_name`}}",
+      "artifact_type": "{{user `artifact_type`}}",
+      "metadata": {
+        "provider": "virtualbox"
+      }
+     }]
+  ],  
+  
+  "provisioners": [
+  {
+    "execute_command": "echo 'centos' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+    "type": "shell",
+    "override": {
+        "virtualbox-iso": {
+          "scripts": [
+            "scripts/base.sh",
+            "scripts/centos_user.sh",
+            "scripts/cloud.sh",
+            "scripts/vagrant-key.sh",
+            "scripts/virtualbox.sh",
+            "scripts/cleanup.sh"
+          ]
+        }
+      }
+    }
+  ]
+}

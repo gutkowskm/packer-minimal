@@ -1,0 +1,18 @@
+{
+  "iso_url": "http://ftp.agh.edu.pl/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+  "iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
+  "iso_checksum_type": "sha256",
+  "redhat_release": "7.1",
+  "vm_name": "centos-7-min-lvm",
+  "guest_os_type": "RedHat_64",
+  "kickstart_file_name": "centos-7-min-lvm.ks",
+  "distr": "CentOS",
+  "user_tag": "gm",
+  "architecture": "x86_64",
+  "disk_size": "10000",
+  "guest_additions_path": "VBoxGuestAdditions_5.0.14.iso",
+  "artifact_name": "centos-7.1-minimal-14-06.16",
+  "artifact_type": "vagrant.box", 
+  "region": "eu-west-1",
+  "s3_bucket_name": "gutkowskim-custom-ami"
+}
